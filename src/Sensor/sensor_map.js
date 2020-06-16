@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map as Map,TileLayer, Marker, Popup } from 'react-leaflet';
 import "../MyAccount/map2.css";
+import firebase from 'firebase'
 
 const styles = {
     wrapper: { 
@@ -28,7 +29,7 @@ handleClick(e){
 
     window.localStorage.setItem("userLatDoc", lat);
     window.localStorage.setItem("userLngDoc", lng);
-
+    var subget = null;
     var mqtt    = require('mqtt');
     var client  = mqtt.connect('wss://mqtt.flespi.io',{
       will: {
@@ -59,6 +60,24 @@ handleClick(e){
     client.on('message', (topic, msg) => {
       console.log(`received message in topic "${topic}": "${msg.toString('utf8')}"`);
       console.log('disconnecting...');
+      client.end();
+    });
+
+    client.on('message', (topic, msg) => {
+      subget=JSON.parse(msg.toString('utf8'));
+      console.log(`received message in topic "${topic}": "${msg.toString('utf8')}"`);
+      console.log('disconnecting...');
+
+      const db = firebase.firestore();
+
+      let data = {
+        lat: subget.lat,
+        lng: subget.lng
+      };
+    
+      // Add a new document in collection "cities" with ID 'LA'
+      let setDoc = db.collection('devices').doc('dispositivo1').set(data);
+
       client.end();
     });
 

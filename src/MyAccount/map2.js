@@ -3,6 +3,11 @@ import { Map as Map,TileLayer, Marker, Popup } from 'react-leaflet';
 import "../MyAccount/map2.css";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
+import firebase from 'firebase'
+
+
+
+
 var subget=JSON.parse('{"lat": 6.26739785475676,"lng":-75.56881427764894}');;
 var greenIcon = L.icon({
     iconUrl: icon,
@@ -26,18 +31,23 @@ const styles = {
       flex: 1
     } 
   };
-class MapExample extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        currentPos: null
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
-    handleClick(e){
 
-    }
-    render() {
+export const MapExample = ({ id }) =>{
+    const db = firebase.firestore();
+
+    let Ref = db.collection('devices').doc(id);
+    let getDoc = Ref.get()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+    });
+
         return (
         <div style={styles.wrapper}>
                 <Map    style={styles.map}
@@ -64,6 +74,4 @@ class MapExample extends Component {
                 </Map>
         </div>
         )
-    }
 }
-export default MapExample;
