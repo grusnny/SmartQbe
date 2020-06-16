@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Map as Map,TileLayer, Marker, Popup } from 'react-leaflet';
 import "../MyAccount/map2.css";
 import firebase from 'firebase'
-
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+import {
+  Card, CardImg, CardText, CardBody, Input,
+  CardTitle, CardSubtitle, Container,
+} from 'reactstrap';
 const styles = {
     wrapper: { 
       height: '100%', 
@@ -14,6 +19,10 @@ const styles = {
       flex: 1
     } 
   };
+  function valuetext(value) {
+    return `${value}°C`;
+  }
+
 class SensorMap extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +31,11 @@ class SensorMap extends Component {
         };
         this.handleClick = this.handleClick.bind(this);
     }
+  commonChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }  
 handleClick(e){
     this.setState({ currentPos: e.latlng });
     const { lat, lng } = e.latlng;
@@ -92,6 +106,7 @@ handleClick(e){
 }
     render() {
         return (
+        <div>
         <div style={styles.wrapper}>
                 <Map    style={styles.map}
                         center={[6.26739785475676,-75.56881427764894]}
@@ -114,6 +129,45 @@ handleClick(e){
                     </Popup>
                     </Marker>}
                 </Map>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-md-4">
+          <Typography id="discrete-slider" gutterBottom>
+            Temperatura
+          </Typography>
+          <Slider
+            defaultValue={30}
+            getAriaValueText={valuetext}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            step={10}
+            marks
+            min={10}
+            max={110}
+          />
+          </div>
+          <div class="col-xs-6 col-md-4">
+          <Typography id="discrete-slider" gutterBottom>
+            Carga
+          </Typography>
+          <Slider
+            defaultValue={30}
+            getAriaValueText={valuetext}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            step={10}
+            marks
+            min={10}
+            max={110}
+          />
+          </div>
+          <div class="col-xs-6 col-md-4">
+          <Typography id="discrete-slider" gutterBottom>
+            Identificador
+          </Typography>
+          <Input name="workerProfession" onChange={this.commonChange} />
+          </div>
+        </div>
         </div>
         )
     }
