@@ -2,66 +2,42 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import MapExample from "../MyAccount/map2"
 import firebase from 'firebase'
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import * as L from 'leaflet'
+import icon from '../Home/marker2.webp';
 import {
   Card, CardImg, CardText, CardBody, Input,
   CardTitle, CardSubtitle, Container,
 } from 'reactstrap';
 import "../MyAccount/MyAccount.css";
 import Error from '../Components/error';
+import Pedidos from '../List/pedidos'
+var name;
+var profession;
+var mail;
+var wid;
+var foto;
+var tel;
+var greenIcon = L.icon({
+    iconUrl: icon,
+    //shadowUrl: shadow,
 
+    iconSize: [80, 80], // size of the icon
+    shadowSize: [50, 64], // size of the shadow
+    iconAnchor: [40, 40], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 const axios = require('axios');
-class MyAccount extends Component {
-  state = { error: false }
-  constructor() {
-    super();
-    this.state = {
-      IDDis: ''
-    }
-    this.commonChange = this.commonChange.bind(this);
-  }
+function MyAccount() {
+  
 
-  commonChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  render() {
-    const { error } = this.state
 
     const db = firebase.firestore();
 
     var usuario = JSON.parse(localStorage.getItem("data"));
 
-    var currentUser = usuario.user.uid;
-    window.localStorage.setItem("UID", currentUser);
-
-    var getuid = window.localStorage.getItem("UID")
-
-    let workerRef
-    while (workerRef == null) {
-      workerRef = db.collection('worker').doc(getuid);
-    }
-    let query = workerRef.get()
-      .then(doc => {
-        if (!doc.exists) {
-          return
-        }
-        window.localStorage.setItem("workerNameDoc", doc.data().name);
-        window.localStorage.setItem("workerMailDoc", doc.data().mail);
-        window.localStorage.setItem("workerMailAltDoc", doc.data().mailAlt);
-        window.localStorage.setItem("workerPhotoDoc", doc.data().photo);
-        window.localStorage.setItem("workerTelephoneDoc", doc.data().telephone);
-        window.localStorage.setItem("workerProfessionDoc", doc.data().profession);
-        window.localStorage.setItem("workerLatDoc", doc.data().latitude);
-        window.localStorage.setItem("workerLonDoc", doc.data().length);
-
-      })
-      .catch(err => {
-        console.log('Error getting document', err);
-      });
-
-    let userRef = db.collection('user').doc(getuid);
+    let userRef = db.collection('user').doc(usuario.user.uid);
     let query1 = userRef.get()
       .then(doc => {
         if (!doc.exists) {
@@ -88,27 +64,24 @@ class MyAccount extends Component {
     var userlatitud = window.localStorage.getItem("userLatDoc");
     var userlongitud = window.localStorage.getItem("userLngDoc");
 
-    var workerProfessionDoc = window.localStorage.getItem("workerProfessionDoc");
+    const [Dispositivos, setDispositivos] = React.useState([])
+    const [activeDisp, setActiveDisp] = React.useState(null);
+    var idDisp = window.localStorage.getItem("IDDispositivo");
 
-    const onSearch = () => {
 
-      window.localStorage.setItem("IDDispositivo", this.state.workerProfession);
-      
-    }
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const db = firebase.firestore()
+            const data = await db.collection('dispositivos').where("id", "==", window.localStorage.getItem("IDDispositivo")).get()
+            setDispositivos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+        }
+        fetchData()
+    }, [])
+
     const onDelete = () => {
 
     }
 
-    // Cargar un componente condicionalmente
-
-    let componente;
-    if (this.state.error) {
-      // Hay un error, mostrar componente
-      componente = <Error mensaje='Debe seleccionar una posición en el mapa primero' />
-    } else {
-      // Mostrar 
-      componente = null;
-    }
     return (
       <div className="page">
         <Container className='text-center'>
@@ -148,13 +121,7 @@ class MyAccount extends Component {
                   <Card style={{ width: '100%', height: '16rem' }}>
                     <CardBody className='text-left'>
                       <CardTitle><h6>Buscar dispositivo</h6></CardTitle>
-                      <CardText>  Ingrese el identificador
-                        <Input name="IDDis" onChange={this.commonChange} />
-                      </CardText>
-                      <button type="button" class="btn btn-outline-primary" onClick={onSearch} >Buscar</button>
-                      <CardBody className='text-center'>
-                        {componente}
-                      </CardBody>
+                      <Pedidos/>
                     </CardBody>
                   </Card>
                   <Card style={{ width: '100%', height: '10rem' }}>
@@ -162,7 +129,6 @@ class MyAccount extends Component {
                       <CardTitle><h6>Dispositivos</h6></CardTitle>
                       <CardText></CardText>
                       <CardText></CardText>
-                      <CardSubtitle>Profesión: {workerProfessionDoc} </CardSubtitle>
                       <CardText>  Eliminar dispositivo </CardText>
                       <button type="button" class="btn btn-outline-primary" onClick={onDelete} >Eliminar dispositivo</button>
                       <div id="loading" style={{ display: "none" }} >Cargando...</div>
@@ -170,7 +136,45 @@ class MyAccount extends Component {
                   </Card>
                 </div>
                 <div class="col-xs-6 col-md-8">
-                  <MapExample id="feedback-bg-info" />
+                  <div className="App">
+                    <Container className='text-left'>                
+                        <Map center={[6.267417, -75.568389]} zoom={15}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            {Dispositivos.map(element =>
+                                <Marker
+                                    key={element.id}
+                                    icon={greenIcon}
+                                    position={[element.lat, element.lon]}
+                                    onDblclick={() => {
+                                        setActiveDisp(element);
+                                    }}
+                                />
+                            )}
+                            {activeDisp && (
+                                <Popup
+                                    position={[
+                                        activeDisp.lat,
+                                        activeDisp.lon
+                                    ]}
+                                    onClose={() => {
+                                        setActiveDisp(null);
+                                    }}
+                                >
+                                    <div>
+                                        <Card style={{ width: '12rem' }}>
+                                            <CardBody>
+                                                <CardTitle>Carga: {activeDisp.Carga}</CardTitle>                                        
+                                            </CardBody>
+                                        </Card>
+                                    </div>
+                                </Popup>
+                            )}
+                        </Map>
+                    </Container>
+                  </div>
                 </div>
               </div>
             </CardBody>
@@ -180,7 +184,6 @@ class MyAccount extends Component {
       </div>
 
     );
-  }
 }
 
-export default withRouter(MyAccount);
+export default MyAccount;

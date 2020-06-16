@@ -13,7 +13,8 @@ function Pedidos() {
   const onSearch = () => {
     window.localStorage.setItem("IDDispositivo", IDDispositivo);   
     console.log(window.localStorage.getItem("IDDispositivo")); 
-    window.location.href = "/mapadispositivo";
+    //window.location.href = "/mapadispositivo";
+    window.location.reload();
   }
 
 
@@ -23,7 +24,9 @@ function Pedidos() {
         <p>Revisa tus SmartQbe : </p>
         <Input name="IDDispositivo" id="exampleIDDispositivo"
                 value={IDDispositivo} onChange={(e) => setIDDispositivo(e.target.value)} />
+                <div></div>
                 <button type="button" class="btn btn-outline-primary" onClick={onSearch} >Buscar</button>
+ 
       </Container>
     </div>
   );
