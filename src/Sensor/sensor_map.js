@@ -1,0 +1,97 @@
+import React, { Component } from 'react';
+import { Map as Map,TileLayer, Marker, Popup } from 'react-leaflet';
+import "../MyAccount/map2.css";
+
+const styles = {
+    wrapper: { 
+      height: '100%', 
+      width: '100%', 
+      margin: '0 auto', 
+      display: 'flex' 
+    },
+    map: {
+      flex: 1
+    } 
+  };
+class SensorMap extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        currentPos: null
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+handleClick(e){
+    this.setState({ currentPos: e.latlng });
+    const { lat, lng } = e.latlng;
+    console.log(lat, lng);
+
+    window.localStorage.setItem("userLatDoc", lat);
+    window.localStorage.setItem("userLngDoc", lng);
+
+    var mqtt    = require('mqtt');
+    var client  = mqtt.connect('wss://mqtt.flespi.io',{
+      will: {
+        topic: 'test',
+        payload: 'somepayload',
+        qos: 1,
+        retain: true,
+        properties: {
+        willDelayInterval: 120 /* MQTT 5.0 property saying how many seconds to wait before publishing the LWT message */
+        }
+      },
+      username: 'FlespiToken fmZr12yVuqMjLEBr3n2FLPINBPzRBmpGweVn4k7oAHybbXr38hyKW4nlKK3bXgFj'
+    });
+    console.log('mqtt client created, connecting...');
+
+    client.on('connect', () => {
+      console.log('connected, subscribing to "test" topic...');
+
+      client.subscribe('test', {qos: 1}, (err) => {
+        if (err) {
+          console.log('failed to subscribe to topic "test":', err);
+          return;
+        }
+        console.log('subscribed to "test" topic, publishing message...');
+        client.publish('test', 'lng', {qos: 1});
+      });
+    });
+
+    client.on('close', () => {
+      console.log('disconnected');
+    })
+    
+    client.on('error', (err) => {
+      console.log('mqtt client error:', err);
+      client.end(true) // force disconnect and stop the script
+    });
+}
+    render() {
+        return (
+        <div style={styles.wrapper}>
+                <Map    style={styles.map}
+                        center={[6.26739785475676,-75.56881427764894]}
+                        zoom={16}
+                        maxZoom={20}
+                        attributionControl={true}
+                        zoomControl={true}
+                        doubleClickZoom={true}
+                        scrollWheelZoom={true}
+                        dragging={true}
+                        animate={true}
+                        easeLinearity={0.35}
+                        onClick={this.handleClick}>
+                    <TileLayer
+                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                    />
+                    { this.state.currentPos && <Marker position={this.state.currentPos} draggable={true}>
+                    <Popup position={this.state.currentPos}>
+                        Current location: <pre>{JSON.stringify(this.state.currentPos, null, 2)}</pre>
+                    </Popup>
+                    </Marker>}
+                </Map>
+        </div>
+        )
+    }
+}
+export default SensorMap;

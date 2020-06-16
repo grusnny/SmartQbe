@@ -24,13 +24,13 @@ const Example = (props) => {
       <DropdownMenu right >
         <h6 align="center"> Menú</h6>
         <DropdownItem divider />
-        <DropdownItem href="/categorias">Buscador</DropdownItem>
-        <DropdownItem divider />
         <DropdownItem href="/accountController">Mi Cuenta</DropdownItem>
         <DropdownItem divider />
         <DropdownItem href="/pedidos">Trabajos</DropdownItem>
         <DropdownItem divider />
         <DropdownItem href="/loginp">Iniciar sesión</DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem href="/sensor">Simular sensor</DropdownItem>
         <DropdownItem divider />
         <DropdownItem onClick={onLogOut}>Cerrar sesión</DropdownItem>
       </DropdownMenu>

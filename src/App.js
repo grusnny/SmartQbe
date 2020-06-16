@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import NavBar from './NavBar/NavBar';
 import Categories from './Home/Categories'
-import Home from './Home/Home';
+import Sensor from './Sensor/sensor';
 import Albanil from './Home/Albanil';
 import Plomero from './Home/Plomero';
 import Loginp from './Login/Loginp';
@@ -21,7 +21,7 @@ class App extends Component {
           <NavBar />
           <Switch>
            <Route exact path="/" 
-           component={Categories}/>
+           component={Loginp}/>
            <Route
               exact
               path="/categorias"
@@ -36,8 +36,8 @@ class App extends Component {
               render={() => <MyAccount />} />
             <Route
               exact
-              path="/home"
-              render={() => <Home />} />
+              path="/sensor"
+              render={() => <Sensor />} />
             <Route
               exact
               path="/logincorreo"

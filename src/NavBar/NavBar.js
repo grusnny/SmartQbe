@@ -25,15 +25,12 @@ class NavBar extends Component {
 
     return (
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">AyudaEnCasa</a> 
+        <a class="navbar-brand" href="#">SmartQbe</a> 
         <div class="navbar-toggler" data-toggle="collapse" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <Example/>
         </div>
         <div class="collapse navbar-collapse" id="navbarColor03">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/categorias">Buscador<span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="/accountController">Mi Cuenta</a>
             </li>
@@ -41,6 +38,9 @@ class NavBar extends Component {
               <a class="nav-link" href="/pedidos">Trabajos</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/sensor">Simular sensor</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="/loginp">Iniciar sesión</a>
             </li>
           </ul>
