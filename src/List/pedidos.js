@@ -13,7 +13,7 @@ function Pedidos() {
   const onSearch = () => {
     window.localStorage.setItem("IDDispositivo", IDDispositivo);   
     console.log(window.localStorage.getItem("IDDispositivo")); 
-    window.location("/mapadispositivo");
+    window.location.href = "/mapadispositivo";
   }
 
 
