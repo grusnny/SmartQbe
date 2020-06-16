@@ -44,15 +44,15 @@ handleClick(e){
     console.log('mqtt client created, connecting...');
 
     client.on('connect', () => {
-      console.log('connected, subscribing to "test" topic...');
+      console.log('connected, subscribing to "Dispositivo1/GPS" topic...');
 
-      client.subscribe('test', {qos: 1}, (err) => {
+      client.subscribe('Dispositivo1/GPS', {qos: 1}, (err) => {
         if (err) {
-          console.log('failed to subscribe to topic "test":', err);
+          console.log('failed to subscribe to topic "Dispositivo1/GPS":', err);
           return;
         }
-        console.log('subscribed to "test" topic, publishing message...');
-        client.publish('test', '{"lat": '+lat+',"lng": '+lng+'}', {qos: 1});
+        console.log('subscribed to "Dispositivo1/GPS" topic, publishing message...');
+        client.publish('Dispositivo1/GPS', '{"lat": '+lat+',"lng": '+lng+'}', {qos: 1});
       });
     });
 
