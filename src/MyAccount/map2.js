@@ -35,52 +35,6 @@ class MapExample extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick(e){
-        var mqtt    = require('mqtt');
-        var client  = mqtt.connect('wss://mqtt.flespi.io',{
-        will: {
-            topic: 'test',
-            qos: 1,
-            retain: true,
-            properties: {
-            willDelayInterval: 120 /* MQTT 5.0 property saying how many seconds to wait before publishing the LWT message */
-            }
-        },
-        username: 'FlespiToken fmZr12yVuqMjLEBr3n2FLPINBPzRBmpGweVn4k7oAHybbXr38hyKW4nlKK3bXgFj'
-        });
-        console.log('mqtt client created, connecting...');
-
-        client.on('connect', () => {
-        console.log('connected, subscribing to "Dispositivo1/GPS" topic...');
-
-        client.subscribe('Dispositivo1/GPS', {qos: 1}, (err) => {
-            if (err) {
-            console.log('failed to subscribe to topic "Dispositivo1/GPS":', err);
-            return;
-            }
-        });
-        });
-
-        client.on('message', (topic, msg) => {
-        subget=JSON.parse(msg.toString('utf8'));
-        console.log(`received message in topic "${topic}": "${msg.toString('utf8')}"`);
-        console.log('disconnecting...');
-        client.end();
-        });
-        
-        client.on('message', (topic, msg) => {
-        subget=JSON.parse(msg.toString('utf8'));
-        console.log(`received message in topic "${topic}": "${msg.toString('utf8')}"`);
-        console.log('disconnecting...');
-        client.end();
-    });
-        client.on('close', () => {
-        console.log('disconnected');
-        })
-        
-        client.on('error', (err) => {
-        console.log('mqtt client error:', err);
-        client.end(true) // force disconnect and stop the script
-        });
 
     }
     render() {
