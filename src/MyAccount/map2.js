@@ -51,7 +51,8 @@ class MapExample extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        currentPos: null
+        currentPos: null,
+        subget: JSON.parse('{"lat": 6.26739785475676,"lng":-75.56881427764894}')
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -59,10 +60,10 @@ class MapExample extends Component {
 
     }
     componentDidMount() {
-      this.interval = setInterval(() => this.setState({ currentPos: null }), 1000);
+      this.interval = window.setInterval(() => this.setState({ subget: JSON.parse('{"lat": 6.26739785475676,"lng":-75.56881427764894}') }), 10);
     }
     componentWillUnmount() {
-      clearInterval(this.interval);
+      window.clearInterval(this.interval);
     }
     render() {
         return (
@@ -82,12 +83,14 @@ class MapExample extends Component {
                     <TileLayer
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     />
+                    while (true) {
                     <Marker 
                             draggable='true'
                             icon={greenIcon}
                             position={[subget.lat, subget.lng]}
 
                         />
+                      }
                 </Map>
         </div>
         )
