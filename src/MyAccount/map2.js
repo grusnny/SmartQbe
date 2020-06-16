@@ -5,10 +5,8 @@ import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import firebase from 'firebase'
 
-
-
-
-var subget=JSON.parse('{"lat": 6.26739785475676,"lng":-75.56881427764894}');;
+const db = firebase.firestore();
+var subget=JSON.parse('{"lat": 6.26739785475676,"lng":-75.56881427764894}');
 var greenIcon = L.icon({
     iconUrl: icon,
     //shadowUrl: shadow,
@@ -32,22 +30,34 @@ const styles = {
     } 
   };
 
-export const MapExample = ({ id }) =>{
-    const db = firebase.firestore();
+let Ref = db.collection('devices').doc('dispositivo1');
+let getDoc = Ref.get()
+  .then(doc => {
+    if (!doc.exists) {
+      console.log('No such document!');
+    } else {
+      subget=doc.data();
+      console.log('esta es la latitud: ', subget.lat);
+      console.log('esta es la longitud: ', subget.lng);
+      console.log('Document data:', doc.data());
+    }
+  })
+  .catch(err => {
+    console.log('Error getting document', err);
+});
 
-    let Ref = db.collection('devices').doc(id);
-    let getDoc = Ref.get()
-      .then(doc => {
-        if (!doc.exists) {
-          console.log('No such document!');
-        } else {
-          console.log('Document data:', doc.data());
-        }
-      })
-      .catch(err => {
-        console.log('Error getting document', err);
-    });
+class MapExample extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        currentPos: null
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick(e){
 
+    }
+    render() {
         return (
         <div style={styles.wrapper}>
                 <Map    style={styles.map}
@@ -74,4 +84,6 @@ export const MapExample = ({ id }) =>{
                 </Map>
         </div>
         )
+    }
 }
+export default MapExample;
