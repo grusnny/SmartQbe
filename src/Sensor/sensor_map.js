@@ -53,7 +53,7 @@ handleClick(e){
           return;
         }
         console.log('subscribed to "test" topic, publishing message...');
-        client.publish('test', 'lng', {qos: 1});
+        client.publish('test', '{"lat": '+lat+',"lng": '+lng+'}', {qos: 1});
       });
     });
 
