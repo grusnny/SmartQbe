@@ -95,64 +95,11 @@ class MyAccount extends Component {
 
     var workerProfessionDoc = window.localStorage.getItem("workerProfessionDoc");
 
-    const onProfession = () => {
-      userlatitud = window.localStorage.getItem("userLatDoc");
-      userlongitud = window.localStorage.getItem("userLngDoc");
-      console.log(userlatitud);
-      console.log(userlongitud);
-      if (userlatitud != "0" && userlongitud != "0") {
-        var loading = document.getElementById('loading');
-        const querystring = require('querystring');
-        axios.post('https://microservicio-dominio.herokuapp.com/worker', querystring.stringify({
-          latitude: userlatitud,
-          length: userlongitud,
-          mail: userMailDoc,
-          mailAlt: userMailAltDoc,
-          name: userNameDoc,
-          photo: userPhotoDoc,
-          profession: this.state.workerProfession,
-          telephone: userTelephoneDoc,
-          uId: getuid
-        }))
-          .then(function (res) {
-            if (res.status == 200) {
-              //mensaje.innerHTML = 'El nuevo Post ha sido almacenado con id: ' + res;
-              console.log(res.status);
-              console.log(res.data);
-            }
-          }).catch(function (err) {
-            console.log(err);
-          })
-          .then(function () {
-            loading.style.display = 'none';
-            console.log("Estoy aqui");
-          });
-        this.setState({ error: false });
-      }
-      else {
-        this.setState({ error: true });
-        return;
-      }
+    const onSearch = () => {
+      
     }
     const onDelete = () => {
-      var loading = document.getElementById('loading');
-      const querystring = require('querystring');
-      axios.post('https://microservicio-dominio.herokuapp.com/Exiworker', querystring.stringify({
-        uId: getuid
-      }))
-        .then(function (res) {
-          if (res.status == 200) {
-            //mensaje.innerHTML = 'El nuevo Post ha sido almacenado con id: ' + res;
-            console.log(res.status);
-            console.log(res.data);
-          }
-        }).catch(function (err) {
-          console.log(err);
-        })
-        .then(function () {
-          loading.style.display = 'none';
-          console.log("Estoy aqui");
-        });
+      
     }
 
     // Cargar un componente condicionalmente
@@ -203,11 +150,11 @@ class MyAccount extends Component {
                   </Card>
                   <Card style={{ width: '100%', height: '16rem' }}>
                     <CardBody className='text-left'>
-                      <CardTitle><h6>Registrar profesión</h6></CardTitle>
-                      <CardText>  Ingrese una profesión
+                      <CardTitle><h6>Buscar dispositivo</h6></CardTitle>
+                      <CardText>  Ingrese el identificador
                         <Input name="workerProfession" onChange={this.commonChange} />
                       </CardText>
-                      <button type="button" class="btn btn-outline-primary" onClick={onProfession} >Registrar profesión</button>
+                      <button type="button" class="btn btn-outline-primary" onClick={onSearch} >Buscar</button>
                       <CardBody className='text-center'>
                         {componente}
                       </CardBody>
@@ -215,12 +162,12 @@ class MyAccount extends Component {
                   </Card>
                   <Card style={{ width: '100%', height: '10rem' }}>
                     <CardBody className='text-left'>
-                      <CardTitle><h6>Mi profesión actual</h6></CardTitle>
+                      <CardTitle><h6>Dispositivos</h6></CardTitle>
                       <CardText></CardText>
                       <CardText></CardText>
                       <CardSubtitle>Profesión: {workerProfessionDoc} </CardSubtitle>
-                      <CardText>  Eliminar profesión </CardText>
-                      <button type="button" class="btn btn-outline-primary" onClick={onDelete} >Eliminar profesión</button>
+                      <CardText>  Eliminar dispositivo </CardText>
+                      <button type="button" class="btn btn-outline-primary" onClick={onDelete} >Eliminar dispositivo</button>
                       <div id="loading" style={{ display: "none" }} >Cargando...</div>
                     </CardBody>
                   </Card>

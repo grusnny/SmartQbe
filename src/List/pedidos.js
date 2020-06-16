@@ -25,7 +25,7 @@ function Pedidos() {
   return (
     <div className="App">
       <Container className='text-center'>
-        <p>Revisa las peticiones de trabajos que has solicitado: </p>
+        <p>Revisa tus SmartQbe : </p>
             {pedido.map(pedido => (
               <CardPedidos pedido={pedido} />
             ))}

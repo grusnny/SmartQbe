@@ -35,7 +35,7 @@ class NavBar extends Component {
               <a class="nav-link" href="/accountController">Mi Cuenta</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/pedidos">Trabajos</a>
+              <a class="nav-link" href="/pedidos">Mis SmartQbe</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/sensor">Simular sensor</a>
