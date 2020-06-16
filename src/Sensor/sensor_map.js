@@ -33,7 +33,6 @@ handleClick(e){
     var client  = mqtt.connect('wss://mqtt.flespi.io',{
       will: {
         topic: 'test',
-        payload: 'somepayload',
         qos: 1,
         retain: true,
         properties: {
@@ -55,6 +54,12 @@ handleClick(e){
         console.log('subscribed to "test" topic, publishing message...');
         client.publish('test', '{"lat": '+lat+',"lng": '+lng+'}', {qos: 1});
       });
+    });
+
+    client.on('message', (topic, msg) => {
+      console.log(`received message in topic "${topic}": "${msg.toString('utf8')}"`);
+      console.log('disconnecting...');
+      client.end();
     });
 
     client.on('close', () => {
