@@ -6,8 +6,7 @@ import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import * as L from 'leaflet'
 import icon from '../Home/marker2.webp';
 import {
-    Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
-    ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
+    Card, CardText, CardBody, CardTitle, CardSubtitle,
 } from 'reactstrap';
 var name;
 var profession;
@@ -68,10 +67,12 @@ function MapExample() {
             const db = firebase.firestore()
             const data = await db.collection('dispositivos').where("id", "==", {idDisp}).get()
             setDispositivos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            console.log(data)
 
         }
         fetchData()
     }, [])
+    
 
     return (
         <div className="App">
