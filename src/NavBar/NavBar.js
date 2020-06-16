@@ -24,7 +24,7 @@ class NavBar extends Component {
     }
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">SmartQbe</a> 
         <div class="navbar-toggler" data-toggle="collapse" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <Example/>
@@ -43,9 +43,14 @@ class NavBar extends Component {
             <li class="nav-item active">
               <a class="nav-link" href="/loginp">Iniciar sesión</a>
             </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
+            <li class="nav-item">
+            <a class="nav-link" href="/accountController">
             <h6> {text}</h6>
+            </a>
+            </li>
+          </ul>
+
+          <form class="form-inline my-2 my-lg-0">
             <button class="btn btn-outline-info my-2 my-sm-0" onClick={onLogOut}>Cerrar sesión</button>
           </form>
         </div>

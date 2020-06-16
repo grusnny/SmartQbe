@@ -11,7 +11,7 @@ export default () => {
                             Inicie sesión en
                     </h1>
                     <h1 className="display-5">
-                            AyudaEnCasa
+                            SmartQbe
                     </h1>
                         <p className="lead">
                             Ingrese por alguno de los siguientes metodos

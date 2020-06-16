@@ -226,7 +226,7 @@ class MyAccount extends Component {
                   </Card>
                 </div>
                 <div class="col-xs-6 col-md-8">
-                    <MapExample/>
+                    <MapExample id="feedback-bg-info"/>
                 </div>
               </div>
             </CardBody>

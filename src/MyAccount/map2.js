@@ -46,6 +46,7 @@ let getDoc = Ref.get()
     console.log('Error getting document', err);
 });
 
+
 class MapExample extends Component {
     constructor(props) {
         super(props);
@@ -56,6 +57,12 @@ class MapExample extends Component {
     }
     handleClick(e){
 
+    }
+    componentDidMount() {
+      this.interval = setInterval(() => this.setState({ currentPos: null }), 1000);
+    }
+    componentWillUnmount() {
+      clearInterval(this.interval);
     }
     render() {
         return (
@@ -75,7 +82,7 @@ class MapExample extends Component {
                     <TileLayer
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     />
-                    <Marker
+                    <Marker 
                             draggable='true'
                             icon={greenIcon}
                             position={[subget.lat, subget.lng]}
