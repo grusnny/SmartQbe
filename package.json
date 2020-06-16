@@ -10,6 +10,7 @@
     "babel-plugin-react-html-attrs": "*",
     "crypto-js": "^4.0.0",
     "firebase": "^7.9.3",
+    "firebase-admin": "^8.12.1",
     "leaflet": "^1.6.0",
     "mqtt": "^4.1.0",
     "react": "^16.13.0",

@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import MapExample from "../MyAccount/map2"
 import firebase from 'firebase'
@@ -15,7 +15,7 @@ class MyAccount extends Component {
   constructor() {
     super();
     this.state = {
-      workerProfession: ''
+      IDDis: ''
     }
     this.commonChange = this.commonChange.bind(this);
   }
@@ -28,27 +28,23 @@ class MyAccount extends Component {
 
   render() {
     const { error } = this.state
-    console.log('historia', this.props.history);
-    console.log('locación', this.props.location);
-    console.log('match', this.props.match);
 
     const db = firebase.firestore();
 
-    var usuario=JSON.parse(localStorage.getItem("data"));
-  
+    var usuario = JSON.parse(localStorage.getItem("data"));
+
     var currentUser = usuario.user.uid;
     window.localStorage.setItem("UID", currentUser);
 
     var getuid = window.localStorage.getItem("UID")
 
     let workerRef
-    while(workerRef==null){
+    while (workerRef == null) {
       workerRef = db.collection('worker').doc(getuid);
     }
     let query = workerRef.get()
       .then(doc => {
         if (!doc.exists) {
-          console.log('No such document!');
           return
         }
         window.localStorage.setItem("workerNameDoc", doc.data().name);
@@ -69,7 +65,6 @@ class MyAccount extends Component {
     let query1 = userRef.get()
       .then(doc => {
         if (!doc.exists) {
-          console.log('No such document!');
           return
         }
         window.localStorage.setItem("userNameDoc", doc.data().name);
@@ -96,10 +91,12 @@ class MyAccount extends Component {
     var workerProfessionDoc = window.localStorage.getItem("workerProfessionDoc");
 
     const onSearch = () => {
+
+      window.localStorage.setItem("IDDispositivo", this.state.workerProfession);
       
     }
     const onDelete = () => {
-      
+
     }
 
     // Cargar un componente condicionalmente
@@ -152,7 +149,7 @@ class MyAccount extends Component {
                     <CardBody className='text-left'>
                       <CardTitle><h6>Buscar dispositivo</h6></CardTitle>
                       <CardText>  Ingrese el identificador
-                        <Input name="workerProfession" onChange={this.commonChange} />
+                        <Input name="IDDis" onChange={this.commonChange} />
                       </CardText>
                       <button type="button" class="btn btn-outline-primary" onClick={onSearch} >Buscar</button>
                       <CardBody className='text-center'>
@@ -173,7 +170,7 @@ class MyAccount extends Component {
                   </Card>
                 </div>
                 <div class="col-xs-6 col-md-8">
-                    <MapExample id="feedback-bg-info"/>
+                  <MapExample id="feedback-bg-info" />
                 </div>
               </div>
             </CardBody>

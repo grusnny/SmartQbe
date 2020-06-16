@@ -1,34 +1,29 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Input, Button } from 'reactstrap';
 import firebase from "../firebase";
-import { CardPedidos } from './CardPedidos'
+import { CardPedidos } from './MapaDispositivo'
 const db = firebase.firestore();
 
 function Pedidos() {
 
 
   var usuario = JSON.parse(localStorage.getItem("data"));
-  const [pedido, setPedido] = React.useState([]);
+  const [IDDispositivo, setIDDispositivo] = React.useState();
 
-
-  React.useEffect(() => {
-
-
-    const fetchData = async () => {
-      const data = await db.collection('pedido').where("uid", "==", usuario.user.uid).get()
-      setPedido(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    }
-    fetchData()
-  }, [])
+  const onSearch = () => {
+    window.localStorage.setItem("IDDispositivo", IDDispositivo);   
+    console.log(window.localStorage.getItem("IDDispositivo")); 
+    window.location("/mapaspedido");
+  }
 
 
   return (
     <div className="App">
       <Container className='text-center'>
         <p>Revisa tus SmartQbe : </p>
-            {pedido.map(pedido => (
-              <CardPedidos pedido={pedido} />
-            ))}
+        <Input name="IDDispositivo" id="exampleIDDispositivo"
+                value={IDDispositivo} onChange={(e) => setIDDispositivo(e.target.value)} />
+                <button type="button" class="btn btn-outline-primary" onClick={onSearch} >Buscar</button>
       </Container>
     </div>
   );
