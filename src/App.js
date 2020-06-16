@@ -10,6 +10,7 @@ import MyAccount from './MyAccount/MyAccount';
 import AccountController from './MyAccount/AccountController';
 import LoginForm from "./Login/LoginForm";
 import PageError from './PageError/PageError';
+import ExampleMap from './List/MapaDispositivo';
 import './App.css';
 import Pedidos from './List/pedidos';
 
@@ -58,6 +59,10 @@ class App extends Component {
               exact
               path="/accountController"
               render={() => <AccountController />} />
+              <Route
+              exact
+              path="/mapadispositivo"
+              render={() => <ExampleMap />} />
             <Route component={PageError} />
           </Switch>
         </div>
