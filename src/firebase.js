@@ -5,14 +5,14 @@ import 'firebase/firebase-firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBSuVqCIDZnNofkcqulvbbYm9rg9HPgC6s",
-  authDomain: "smartqbe.firebaseapp.com",
-  databaseURL: "https://smartqbe.firebaseio.com",
-  projectId: "smartqbe",
-  storageBucket: "smartqbe.appspot.com",
-  messagingSenderId: "467819135969",
-  appId: "1:467819135969:web:5791742ef3e126aec008a0",
-  measurementId: "G-C6NM5SMT43"
+  apiKey: "AIzaSyBgnz4ZgUKtqFqIIvtOuoSyp3ZHr3D1LSg",
+    authDomain: "smartqbe-a283c.firebaseapp.com",
+    databaseURL: "https://smartqbe-a283c.firebaseio.com",
+    projectId: "smartqbe-a283c",
+    storageBucket: "smartqbe-a283c.appspot.com",
+    messagingSenderId: "827668597629",
+    appId: "1:827668597629:web:69f2f786266c9bda289a14",
+    measurementId: "G-LPLXFGFF7P"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
