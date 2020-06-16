@@ -65,10 +65,8 @@ function MapExample() {
     React.useEffect(() => {
         const fetchData = async () => {
             const db = firebase.firestore()
-            const data = await db.collection('dispositivos').where("id", "==", {idDisp}).get()
+            const data = await db.collection('dispositivos').where("id", "==", window.localStorage.getItem("IDDispositivo")).get()
             setDispositivos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            console.log(data)
-
         }
         fetchData()
     }, [])
