@@ -5,14 +5,14 @@ import 'firebase/firebase-firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBgnz4ZgUKtqFqIIvtOuoSyp3ZHr3D1LSg",
-    authDomain: "smartqbe-a283c.firebaseapp.com",
-    databaseURL: "https://smartqbe-a283c.firebaseio.com",
-    projectId: "smartqbe-a283c",
-    storageBucket: "smartqbe-a283c.appspot.com",
-    messagingSenderId: "827668597629",
-    appId: "1:827668597629:web:69f2f786266c9bda289a14",
-    measurementId: "G-LPLXFGFF7P"
+  apiKey: "AIzaSyB-17um7BlaF6ynqYhcaS-XSWuWIpnK1L0",
+    authDomain: "ayudaencasa-38fe2.firebaseapp.com",
+    databaseURL: "https://ayudaencasa-38fe2.firebaseio.com",
+    projectId: "ayudaencasa-38fe2",
+    storageBucket: "ayudaencasa-38fe2.appspot.com",
+    messagingSenderId: "580367803186",
+    appId: "1:580367803186:web:866c0e68eb2a00d9f7ed2b",
+    measurementId: "G-WY62JM8GVH"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
