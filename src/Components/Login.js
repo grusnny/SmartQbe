@@ -33,7 +33,7 @@ export default class Login extends Component{
                         console.log("valor");
                         console.log(valor);
                         if(valor==1){
-                            window.location.href="/categorias";
+                            window.location.href="/accountController";
                             console.log("el valor es: 1");
                         }else{
                             window.location.href="/logincorreo";
@@ -43,7 +43,7 @@ export default class Login extends Component{
                     }
                     }).catch(function(err) {
                         console.log(err);
-                        window.location.href="/categorias";
+                        window.location.href="/loginp";
                     })
                     .then(function() {
                         //loading.style.display = 'none';

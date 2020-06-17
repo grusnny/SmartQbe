@@ -26,7 +26,7 @@ const Example = (props) => {
         <DropdownItem divider />
         <DropdownItem href="/accountController">Mi Cuenta</DropdownItem>
         <DropdownItem divider />
-        <DropdownItem href="/pedidos">Trabajos</DropdownItem>
+        <DropdownItem href="/pedidos">Mis SmartQbes</DropdownItem>
         <DropdownItem divider />
         <DropdownItem href="/loginp">Iniciar sesión</DropdownItem>
         <DropdownItem divider />
