@@ -73,7 +73,7 @@ function MyAccount() {
         const fetchData = async () => {
             const db = firebase.firestore()
             const data = await db.collection('dispositivos').where("id", "==", window.localStorage.getItem("IDDispositivo")).get()
-            setDispositivos(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            setDispositivos(data.docs.map(doc => ({ ...doc.data(), Id: doc.id })))
         }
         fetchData()
     }, [])
@@ -166,7 +166,9 @@ function MyAccount() {
                                     <div>
                                         <Card style={{ width: '12rem' }}>
                                             <CardBody>
-                                                <CardTitle>Carga: {activeDisp.Carga}</CardTitle>                                        
+                                              <CardTitle>Id: {activeDisp.id}</CardTitle>  
+                                              <CardTitle>Peso de carga: {activeDisp.Carga}</CardTitle>
+                                              <CardTitle>Temperatura: {activeDisp.temp}</CardTitle>                                        
                                             </CardBody>
                                         </Card>
                                     </div>

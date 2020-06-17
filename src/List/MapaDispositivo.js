@@ -103,7 +103,9 @@ function MapExample() {
                             <div>
                                 <Card style={{ width: '12rem' }}>
                                     <CardBody>
-                                        <CardTitle>Carga: {activeDisp.Carga}</CardTitle>                                        
+                                        <CardTitle>Id: {activeDisp.id}</CardTitle>  
+                                        <CardTitle>Peso de carga: {activeDisp.Carga}</CardTitle>
+                                        <CardTitle>Temperatura: {activeDisp.temp}</CardTitle>                                        
                                     </CardBody>
                                 </Card>
                             </div>
