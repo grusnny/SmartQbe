@@ -8,6 +8,9 @@ import {
   Card, CardImg, CardText, CardBody, Input,
   CardTitle, CardSubtitle, Container,
 } from 'reactstrap';
+var Slider1=30;
+var Slider2=30;
+var id="default";
 const styles = {
     wrapper: { 
       height: '100%', 
@@ -19,10 +22,14 @@ const styles = {
       flex: 1
     } 
   };
-  function valuetext(value) {
+  function valuetext1(value) {
+    Slider1=value;
     return `${value}°C`;
   }
-
+  function valuetext2(value) {
+    Slider2=value;
+    return `${value}°C`;
+  }
 class SensorMap extends Component {
     constructor(props) {
         super(props);
@@ -30,17 +37,22 @@ class SensorMap extends Component {
         currentPos: null
         };
         this.handleClick = this.handleClick.bind(this);
+        this.commonChange = this.commonChange.bind(this);
     }
   commonChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
+    id=event.target.value;
+
   }  
 handleClick(e){
     this.setState({ currentPos: e.latlng });
     const { lat, lng } = e.latlng;
     console.log(lat, lng);
-
+    console.log(Slider1);
+    console.log(Slider2);
+    console.log(id);
     window.localStorage.setItem("userLatDoc", lat);
     window.localStorage.setItem("userLngDoc", lng);
     var subget = null;
@@ -85,12 +97,16 @@ handleClick(e){
       const db = firebase.firestore();
 
       let data = {
+        Carga:Slider2,
+        id:id,
         lat: subget.lat,
-        lng: subget.lng
+        lon: subget.lng,
+        temp: Slider1,     
+       
       };
     
       // Add a new document in collection "cities" with ID 'LA'
-      let setDoc = db.collection('devices').doc('dispositivo1').set(data);
+      let setDoc = db.collection('dispositivos').doc().set(data);
 
       client.end();
     });
@@ -137,7 +153,7 @@ handleClick(e){
           </Typography>
           <Slider
             defaultValue={30}
-            getAriaValueText={valuetext}
+            getAriaValueText={valuetext1}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={10}
@@ -152,7 +168,7 @@ handleClick(e){
           </Typography>
           <Slider
             defaultValue={30}
-            getAriaValueText={valuetext}
+            getAriaValueText={valuetext2}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={10}
