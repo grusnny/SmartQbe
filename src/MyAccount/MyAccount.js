@@ -12,12 +12,9 @@ import {
 import "../MyAccount/MyAccount.css";
 import Error from '../Components/error';
 import Pedidos from '../List/pedidos'
-var name;
-var profession;
-var mail;
-var wid;
-var foto;
-var tel;
+var latitud=6.267417;
+var longitud=-75.568389;
+const db = firebase.firestore()
 var greenIcon = L.icon({
     iconUrl: icon,
     //shadowUrl: shadow,
@@ -68,11 +65,33 @@ function MyAccount() {
     const [activeDisp, setActiveDisp] = React.useState(null);
     var idDisp = window.localStorage.getItem("IDDispositivo");
 
+    let citiesRef = db.collection('dispositivos');
+    let query = citiesRef.where('id', '==', window.localStorage.getItem("IDDispositivo")).get()
+  .then(snapshot => {
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      if(doc.data().lat!=undefined && doc.data().lon!=undefined){
+          latitud=doc.data().lat;
+          longitud=doc.data().lon;
+      }
+      console.log(doc.id, '=>', doc.data());
+    });
+  })
+  .catch(err => {
+    console.log('Error getting documents', err);
+  });
+
 
     React.useEffect(() => {
         const fetchData = async () => {
             const db = firebase.firestore()
             const data = await db.collection('dispositivos').where("id", "==", window.localStorage.getItem("IDDispositivo")).get()
+            
+
             setDispositivos(data.docs.map(doc => ({ ...doc.data(), Id: doc.id })))
         }
         fetchData()
@@ -137,13 +156,14 @@ function MyAccount() {
                 </div>
                 <div class="col-xs-6 col-md-8">
                   <div className="App">
-                    <Container className='text-left'>                
-                        <Map center={[6.267417, -75.568389]} zoom={15}>
+                    <Container className='text-left'> 
+   
+                        <Map center={[latitud, longitud]} zoom={15}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             />
-                            {Dispositivos.map(element =>
+                              {Dispositivos.map(element =>
                                 <Marker
                                     key={element.id}
                                     icon={greenIcon}
@@ -152,7 +172,7 @@ function MyAccount() {
                                         setActiveDisp(element);
                                     }}
                                 />
-                            )}
+                                )}
                             {activeDisp && (
                                 <Popup
                                     position={[
