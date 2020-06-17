@@ -36,7 +36,7 @@ function MyAccount() {
     const db = firebase.firestore();
 
     var usuario = JSON.parse(localStorage.getItem("data"));
-
+    console.log(usuario.user.uid);
     let userRef = db.collection('user').doc(usuario.user.uid);
     let query1 = userRef.get()
       .then(doc => {
